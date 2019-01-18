@@ -22,16 +22,29 @@ app.post('/todos', (req, res) => {
         text: req.body.text
     });
     todo.save()
-    .then(doc => {
-        res.send(doc)
-    })
-    .catch(err=>{
-        res.status(400).send(err)
-    })
+        .then(doc => {
+            res.send(doc)
+        })
+        .catch(err => {
+            res.status(400).send(err)
+        })
 
+})
+
+app.get('/todos', (req, res) => {
+    Todo.find().then(todos => {
+        res.send({
+            todos
+        })
+    }).catch(err => res.status(400).send(err))
 })
 
 
 
 
 app.listen(3000, () => console.log('Server Started on port 3000'))
+
+
+module.exports = {
+    app
+}
